@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat Application</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-gray-100">
+
+    <div class="flex items-center justify-center h-screen">
+        <div class="w-full max-w-md p-4 bg-white rounded-lg shadow-md">
+            <div class="flex justify-between items-center pb-3 border-b">
+                <h2 class="text-xl font-semibold">Chat Room</h2>
+                <button class="text-blue-500 hover:underline">Logout</button>
+            </div>
+            <div id="chatBox" class="h-80 overflow-y-auto py-4">
+                <!-- Chat messages will go here -->
+
+
+            </div>
+            <div class="flex items-center border-t pt-4">
+                <input id="messageInput" type="text" placeholder="Type your message..."
+                    class="w-full p-2 rounded-lg border border-gray-300 focus:outline-none focus:ring focus:border-blue-500">
+                <button id="send" class="ml-2 px-4 py-2 bg-blue-500 text-white rounded-lg">Send</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.socket.io/4.7.5/socket.io.min.js" integrity="sha384-2huaZvOR9iDzHqslqwpR87isEmrfxqyWOF7hr7BY6KG0+hVKLoEXMPUJw3ynWuhO" crossorigin="anonymous"></script>
+    <script src="/js/socket.js"></script>
+
+</body>
+
+</html>
