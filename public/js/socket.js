@@ -1,13 +1,19 @@
 const socket = io();
-
 const $ = (e) => document.querySelector(e);
+
+// taking the name of user
+let username;
+do{
+  username = prompt('Please enter your username')
+}while(!username)
+
 
 // this is sending the message value to a server
 
 $("#send").addEventListener("click", (e) => {
   const message = $("#messageInput").value;
   if (message.trim() !== "") {
-    socket.emit("client-send", message);
+    socket.emit("client-send", {message, username});
     $("#messageInput").value = "";
   }
 });
@@ -20,13 +26,13 @@ const scroll = (e) => {
 
 //this is the receiving the message fome the server
 
-socket.on("server-send", ({ message, id }) => {
+socket.on("server-send", ({ message, id, name }) => {
   const messageContainer = $("#chatBox");
   let messageElement = "";
-
   if (socket.id === id) {
     messageElement = `
-            <div class="flex items-end gap-3 flex-col mb-4">
+            <div class="flex items-end flex-col mb-4">
+                <h4 class="text-sm">${name}</h4>
                 <div class="bg-blue-500 w-fit text-white p-3 rounded-lg">
                     <p>${message}</p>
                     <span class="text-xs text-gray-200">10:32 AM</span>
@@ -34,7 +40,8 @@ socket.on("server-send", ({ message, id }) => {
             </div>`;
   } else {
     messageElement = `
-            <div class="flex items-start gap-3 flex-col mb-4">
+            <div class="flex items-start flex-col mb-4">
+                <h4 class="text-sm">${name}</h4>
                 <div class="bg-gray-200 p-3 rounded-lg">
                     <p class="text-gray-800">${message}</p>
                     <span class="text-xs text-gray-500">10:30 AM</span>

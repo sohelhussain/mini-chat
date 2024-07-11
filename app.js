@@ -11,7 +11,7 @@ const io = socketio(server);
 io.on('connection', socket => {
     console.log('user connected ' + socket.id);
     socket.on('client-send', data => {
-        io.emit('server-send', {message: data, id: socket.id});
+        io.emit('server-send', {message: data.message, id: socket.id, name: data.username});
     });
     
     //showing to every one of typin word without me
