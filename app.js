@@ -10,9 +10,15 @@ const io = socketio(server);
 
 io.on('connection', socket => {
     console.log('user connected ' + socket.id);
-    socket.on('clint-send', data => {
+    socket.on('client-send', data => {
         io.emit('server-send', {message: data, id: socket.id});
     });
+    
+    //showing to every one of typin word without me
+    socket.on('type', type => {
+      socket.broadcast.emit('server-type', type)
+    })
+
     socket.on('disconnect', () =>{
         console.log('user disconnected ' + socket.id);
     })

@@ -13,13 +13,11 @@
     <div class="flex items-center justify-center h-screen">
         <div class="w-full max-w-md p-4 bg-white rounded-lg shadow-md">
             <div class="flex justify-between items-center pb-3 border-b">
-                <h2 class="text-xl font-semibold">Chat Room</h2>
+                <h2 class="text-xl font-semibold">Chat Room <span class="font-extralight ml-1 text-sm"><i id="type"><!-- Typing indicator --></i></span></h2>
                 <button class="text-blue-500 hover:underline">Logout</button>
             </div>
-            <div id="chatBox" class="h-80 overflow-y-auto py-4">
+            <div id="chatBox" class="message-container h-80 overflow-y-auto py-4">
                 <!-- Chat messages will go here -->
-
-
             </div>
             <div class="flex items-center border-t pt-4">
                 <input id="messageInput" type="text" placeholder="Type your message..."
