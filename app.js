@@ -8,10 +8,14 @@ const app = express();
 const server = http.createServer(app);
 const io = socketio(server);
 
+let userOnline = 0;
+
 io.on('connection', socket => {
-    console.log('user connected ' + socket.id);
+    ++userOnline;
+    console.log('user connected ' + socket.id + userOnline);
+    io.emit('user-show', userOnline);
     socket.on('client-send', data => {
-        io.emit('server-send', {message: data.message, id: socket.id, name: data.username});
+        io.emit('server-send', {message: data, id: socket.id});
     });
     
     //showing to every one of typin word without me
@@ -20,7 +24,8 @@ io.on('connection', socket => {
     })
 
     socket.on('disconnect', () =>{
-        console.log('user disconnected ' + socket.id);
+      --userOnline;
+        console.log('user disconnected ' + socket.id + userOnline);
     })
 })
 
