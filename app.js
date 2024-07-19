@@ -8,12 +8,17 @@ const app = express();
 const server = http.createServer(app);
 const io = socketio(server);
 
-let userOnline = 0;
+let socketid = [];
+let userName = [];
 
 io.on('connection', socket => {
-    ++userOnline;
-    console.log('user connected ' + socket.id + userOnline);
-    io.emit('user-show', userOnline);
+
+    console.log('user connected ' + socket.id);
+    socket.on('input', userName => {
+      console.log(userName);
+    })
+
+    // io.emit('user-show');
     socket.on('client-send', data => {
         io.emit('server-send', {message: data, id: socket.id});
     });
@@ -24,8 +29,7 @@ io.on('connection', socket => {
     })
 
     socket.on('disconnect', () =>{
-      --userOnline;
-        console.log('user disconnected ' + socket.id + userOnline);
+        console.log('user disconnected ' + socket.id);
     })
 })
 
