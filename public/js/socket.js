@@ -4,19 +4,20 @@ const $ = (e) => document.querySelector(e);
 
 //taking the name input value
 
-document.querySelector(".inputname").addEventListener("input", (e) => {
-  let userName = e.target.value;
-});
-
 document.querySelector(".name-send").addEventListener('click', () => {
-  let userName = document.querySelector(".inputname").value;
+  let userName = document.querySelector(".inputname").value.trim();
   socket.emit("input", userName);
 });
 
+socket.on('nameSetDone', () => {
+  $('.full').style.display = 'none';
+})
 
 
-socket.on("user-show", (data) => {
+
+socket.on("liveUser", (data) => {
   $(".online").innerHTML = `${data} user online`;
+  console.log(data);
 });
 
 // this is sending the message value to a server
