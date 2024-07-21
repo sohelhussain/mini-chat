@@ -28,9 +28,60 @@ io.on("connection", (socket) => {
   });
 
   //showing to every one of typin word without me
-  socket.on("type", (type) => {
-    socket.broadcast.emit("server-type", type);
+  socket.on("type", () => {
+    let index = socketid.indexOf(socket.id);
+    let name = usersName[index];
+    socket.broadcast.emit("server-type", name);
   });
+
+
+
+
+
+
+
+
+
+  // rooms------------------------>
+
+
+socket.on("roomJoin", room => {
+  socket.join(room);
+})
+
+socket.on('sendMess', data => {
+  console.log(data.text, data.message);
+  io.to(data.text).emit('serverRoom', data.message);
+})
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
   socket.on("disconnect", () => {
     let index = socketid.indexOf(socket.id);

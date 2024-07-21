@@ -5,6 +5,7 @@ const $ = (e) => document.querySelector(e);
 //taking the name input value
 
 document.querySelector(".name-send").addEventListener('click', () => {
+  console.log("adsf");
   let userName = document.querySelector(".inputname").value.trim();
   socket.emit("input", userName);
 });
@@ -69,23 +70,43 @@ socket.on("server-send", ({ message, id }) => {
 const typingWords = (e) => {
   // sending typing words data to the server
 
-  $("#messageInput").addEventListener("input", (e) => {
-    if (e.target.value.length > 0) {
-      socket.emit("type", true);
-    } else {
-      socket.emit("type", false);
-    }
-  });
+  // $("#messageInput").addEventListener("input", (e) => {
+  //   if (e.target.value.length > 0) {
+  //     socket.emit("type", true);
+  //   } else {
+  //     socket.emit("type", false);
+  //   }
+  // });
 
   // receiving typing words data to the server
 
-  socket.on("server-type", (type) => {
-    const typing = `Typing...`;
-    if (type) {
-      $("#type").innerHTML = typing;
-    } else {
-      $("#type").innerHTML = "";
-    }
-  });
-};
+//   socket.on("server-type", (type) => {
+//     const typing = `Typing...`;
+//     if (type) {
+//       $("#type").innerHTML = typing;
+//     } else {
+//       $("#type").innerHTML = "";
+//     }
+//   });
+// };
+
+
+
+
+
+$("#messageInput").addEventListener('input', (e) => {
+  socket.emit("type", );
+});
+
+
+let time;
+
+socket.on('server-type', name =>{
+  $("#type").textContent = `${name} is typing...`;
+  clearTimeout(time);
+  time = setTimeout(() => {
+    $("#type").textContent = ``;
+  },1200)
+})
+}
 typingWords();

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+  <body>
+    <div class="main w-full min-h-screen bg-zinc-800 p-5">
+        <div class="box flex items-center">
+            <h1 class="text-white text-lg uppercase">join to the room</h1>
+            <button class="roombtn border-none ml-10 bg-red-500 rounded-sm text-white px-3 py-2">computer</button>
+            <button class="roombtn border-none ml-10 bg-yellow-500 rounded-sm text-white px-3 py-2">mac</button>
+            <button class="roombtn border-none ml-10 bg-green-500 rounded-sm text-white px-3 py-2">windows</button>
+            <button class="roombtn border-none ml-10 bg-blue-500 rounded-sm text-white px-3 py-2">graps</button>
+        </div>
+        <div class="send-box mt-10 flex items-center">
+            <h1 class="text-white text-lg uppercase">send the message to the room</h1>
+            <button class="sendbtn border-none ml-10 bg-red-500 rounded-sm text-white px-3 py-2">computer</button>
+            <button class="sendbtn border-none ml-10 bg-yellow-500 rounded-sm text-white px-3 py-2">mac</button>
+            <button class="sendbtn border-none ml-10 bg-green-500 rounded-sm text-white px-3 py-2">windows</button>
+            <button class="sendbtn border-none ml-10 bg-blue-500 rounded-sm text-white px-3 py-2">graps</button>
+        </div>
+    </div>
+
+
+
+    <script
+      src="https://cdn.socket.io/4.7.5/socket.io.min.js"
+      integrity="sha384-2huaZvOR9iDzHqslqwpR87isEmrfxqyWOF7hr7BY6KG0+hVKLoEXMPUJw3ynWuhO"
+      crossorigin="anonymous"
+    ></script>
+    <script>
+      const socket = io();
+
+      const roombtn = document.querySelectorAll('.roombtn');
+      const sendbtn = document.querySelectorAll('.sendbtn');
+
+      roombtn.forEach(btn => {
+        btn.addEventListener('click', e => {
+            socket.emit('roomJoin', btn.textContent.toLowerCase())
+        });
+      })
+
+      sendbtn.forEach(btn => {
+        btn.addEventListener('click', e => {
+            socket.emit('sendMess', {text: btn.textContent.toLowerCase(), message: 'hey'});
+        });
+      })
+
+      socket.on('serverRoom', message => {
+        console.log(message);
+      })
+
+    </script>
+  </body>
+</html>
